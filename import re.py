@@ -7,11 +7,11 @@ def evaluate_password(password):
     """
 
     # Criteria and their corresponding scores
-    length_criteria = len(password) >= 12
-    lower_criteria = any(char.islower() for char in password)
-    upper_criteria = any(char.isupper() for char in password)
-    digit_criteria = any(char.isdigit() for char in password)
-    special_criteria = re.search(r"[!@#$%^&*(),.?\":{}|<>]", password) is not None
+    is_length_sufficient = len(password) >= 12
+    has_lowercase = any(char.islower() for char in password)
+    has_uppercase = any(char.isupper() for char in password)
+    has_digit = any(char.isdigit() for char in password)
+    has_special_char = re.search(r"[!@#$%^&*(),.?\":{}|<>]", password) is not None
 
     # Common password patterns
     common_patterns = [
@@ -21,21 +21,21 @@ def evaluate_password(password):
 
     # Calculate score
     score = sum([
-        length_criteria, lower_criteria, upper_criteria,
-        digit_criteria, special_criteria
+        is_length_sufficient, has_lowercase, has_uppercase,
+        has_digit, has_special_char
     ])
     
     # Feedback
     feedback = []
-    if not length_criteria:
+    if not is_length_sufficient:
         feedback.append("Increase password length to at least 12 characters.")
-    if not lower_criteria:
+    if not has_lowercase:
         feedback.append("Add lowercase letters.")
-    if not upper_criteria:
+    if not has_uppercase:
         feedback.append("Include uppercase letters.")
-    if not digit_criteria:
+    if not has_digit:
         feedback.append("Use at least one numeric digit.")
-    if not special_criteria:
+    if not has_special_char:
         feedback.append("Include special characters (e.g., !, @, #).")
     if common_criteria:
         feedback.append("Avoid using common patterns or phrases like 'password123'.")
